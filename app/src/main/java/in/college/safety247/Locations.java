@@ -27,6 +27,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andexert.library.RippleView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -100,7 +101,13 @@ public class Locations extends android.support.v4.app.Fragment implements OnMapR
         btnFindPath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendRequest();
+                final RippleView rippleView = (RippleView) rootView.findViewById(R.id.pathRipple);
+                rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                    @Override
+                    public void onComplete(RippleView rippleView) {
+                        sendRequest();
+                    }
+                });
             }
         });
         return rootView;

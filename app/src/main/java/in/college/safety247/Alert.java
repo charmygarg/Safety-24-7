@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.andexert.library.RippleView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,8 +100,13 @@ public class Alert extends android.support.v4.app.Fragment {
 
                   @Override
                   public void onClick(View v) {
-
-                        sendSMSMessage();
+                      final RippleView rippleView = (RippleView) rootView.findViewById(R.id.alertRipple);
+                      rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                          @Override
+                          public void onComplete(RippleView rippleView) {
+                              sendSMSMessage();
+                          }
+                      });
                   }
             });
             return rootView;
@@ -127,7 +134,8 @@ public class Alert extends android.support.v4.app.Fragment {
                                 .setNegativeButton("Cancel", null)
                                 .show();
                   }
-              //    if(lat != null && lang != null)
+                Toast.makeText(this.getContext(),"Please wait internet is slow....",Toast.LENGTH_SHORT).show();
+                  if(lat != null && lang != null)
                         while (i != num.size()) {
                             Toast.makeText(this.getContext(), "Sending SMS....", Toast.LENGTH_LONG).show();
                               String message = "Help Me My Location is::";
@@ -135,14 +143,14 @@ public class Alert extends android.support.v4.app.Fragment {
                               String uri = "http://maps.google.com/maps?saddr=" + lat + "," + lang;
                               String phoneNo = num.get(i).getNumber();
 
-                            //  if (lat != null && lang != null) {
+                              if (lat != null && lang != null) {
                                     SmsManager smsManager = SmsManager.getDefault();
                                     StringBuffer smsBody = new StringBuffer();
                                     smsBody.append(Uri.parse(uri));
 
                                     smsManager.sendTextMessage(phoneNo, null, message + smsBody.toString(), null, null);
                                     i++;
-                           //   }
+                             }
                         }
 
 

@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.andexert.library.RippleView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,10 +38,15 @@ public class Alert_ADD extends AppCompatActivity {
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
 
-
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
-                startActivityForResult(intent, 1);
+                final RippleView rippleView = (RippleView) findViewById(R.id.ripplePick);
+                rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                    @Override
+                    public void onComplete(RippleView rippleView) {
+                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                        intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE);
+                        startActivityForResult(intent, 1);
+                    }
+                });
 
             }});
         mContactsDatabaseAdapter =new ContactsDatabaseAdapter(this);
@@ -47,15 +54,18 @@ public class Alert_ADD extends AppCompatActivity {
 
         Button buttonShowContact = (Button) findViewById(R.id.showcontact);
         buttonShowContact.setOnClickListener(new Button.OnClickListener(){
-                                                 @Override
-                                                 public void onClick(View v) {
-                                                     Intent intent = new Intent(Alert_ADD.this, RecyclerAdapter.class);
-                                                     startActivity(intent);
-                                                 }
-                                             }
-        );
-
-
+            @Override
+            public void onClick(View v) {
+                final RippleView rippleView = (RippleView) findViewById(R.id.rippleShow);
+                rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
+                    @Override
+                    public void onComplete(RippleView rippleView) {
+                        Intent intent = new Intent(Alert_ADD.this, RecyclerAdapter.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
     }
 
     @Override

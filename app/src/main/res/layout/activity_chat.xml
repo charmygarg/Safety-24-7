@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/fab_add"
         app:elevation="7dp"
-        app:backgroundTint="@color/cyan"
+        app:backgroundTint="@color/blue"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
